@@ -1,16 +1,20 @@
 """
 Author: Joon Sung Park (joonspk@stanford.edu)
 
-File: gpt_structure.py
-Description: Wrapper functions for calling OpenAI APIs.
+File: test.py
+Description: Test wrapper functions for calling OpenAI APIs and compatible endpoints.
 """
 import json
 import random
 import openai
 import time 
 
-from utils import *
-openai.api_key = openai_api_key
+from persona.prompt_template.utils import *
+
+# Initialize OpenAI configuration
+config = get_openai_config()
+openai.api_key = config["api_key"]
+openai.api_base = config["base_url"]
 
 def ChatGPT_request(prompt): 
   """
