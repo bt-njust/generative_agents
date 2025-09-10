@@ -2,7 +2,7 @@
 Author: Joon Sung Park (joonspk@stanford.edu)
 
 File: gpt_structure.py
-Description: Wrapper functions for calling OpenAI APIs.
+Description: Wrapper functions for calling OpenAI APIs and compatible endpoints.
 """
 import json
 import random
@@ -11,10 +11,33 @@ import time
 
 from utils import *
 
-openai.api_key = openai_api_key
+# Initialize OpenAI configuration
+config = get_openai_config()
+openai.api_key = config["api_key"]
+openai.api_base = config["base_url"]
 
 def temp_sleep(seconds=0.1):
   time.sleep(seconds)
+
+def update_openai_config(api_key=None, base_url=None):
+  """
+  Update OpenAI configuration settings during runtime.
+  
+  Args:
+    api_key (str, optional): OpenAI API key
+    base_url (str, optional): OpenAI base URL for API requests
+  """
+  global openai
+  
+  # Update the configuration
+  set_openai_config(api_key, base_url)
+  
+  # Get updated config
+  config = get_openai_config()
+  
+  # Apply to openai module
+  openai.api_key = config["api_key"]
+  openai.api_base = config["base_url"]
 
 def ChatGPT_single_request(prompt): 
   temp_sleep()
